@@ -73,6 +73,8 @@ import tachiyomi.source.local.entries.anime.isLocal
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import kotlin.random.Random
+import java.time.Instant
+import java.time.ZoneId
 
 /**
  * Typealias for the library anime, using the category as keys, and list of anime as values.
@@ -273,6 +275,13 @@ class AnimeLibraryScreenModel(
 
         fun AnimeLibrarySort.comparator(): Comparator<AnimeLibraryItem> = Comparator { i1, i2 ->
             when (this.type) {
+                AnimeLibrarySort.Type.SeasonYear -> {
+                    val year1 = Instant.ofEpochMilli(i1.libraryAnime.anime.dateAdded)
+                        .atZone(ZoneId.systemDefault()).year
+                    val year2 = Instant.ofEpochMilli(i2.libraryAnime.anime.dateAdded)
+                        .atZone(ZoneId.systemDefault()).year
+                    year1.compareTo(year2)
+                }
                 AnimeLibrarySort.Type.Alphabetical -> {
                     sortAlphabetically(i1, i2)
                 }

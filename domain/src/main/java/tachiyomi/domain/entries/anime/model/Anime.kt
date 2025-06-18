@@ -33,6 +33,7 @@ data class Anime(
     val lastModifiedAt: Long,
     val favoriteModifiedAt: Long?,
     val version: Long,
+    val seasonYear: Int? = null,
 ) : Serializable {
 
     val expectedNextUpdate: Instant?
